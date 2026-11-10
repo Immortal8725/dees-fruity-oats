@@ -160,6 +160,15 @@
 
         <h3 class="tier-title">Premium combos with nuts</h3>
         <div class="menu-grid" id="premium-menu"></div>
+
+        <aside class="custom-mix-callout" aria-labelledby="custom-mix-heading">
+          <div>
+            <p class="eyebrow">Your own combination</p>
+            <h3 id="custom-mix-heading">Build your own mix</h3>
+            <p>Want a combination that isn't on the menu? Choose any fruits, nuts and spices you like, in 500g or 1kg. Price is confirmed on WhatsApp.</p>
+          </div>
+          <a class="btn btn-primary" href="#order" id="start-custom-mix">Start your mix</a>
+        </aside>
       </div>
     </section>
 
@@ -173,10 +182,36 @@
           </div>
 
           <form id="order-form" class="order-form" novalidate>
-            <label>
-              Combo
-              <select id="combo" required></select>
-            </label>
+            <fieldset class="mode-switch">
+              <legend class="visually-hidden">Order type</legend>
+              <div class="mode-switch-row">
+                <label class="mode-option">
+                  <input type="radio" name="order-mode" value="combo" checked />
+                  <span>Menu combo</span>
+                </label>
+                <label class="mode-option">
+                  <input type="radio" name="order-mode" value="custom" />
+                  <span>Build your own mix</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <p id="custom-mode-hint" class="mode-hint" hidden>Pick any fruits, nuts and spices you like. Price is confirmed on WhatsApp.</p>
+
+            <div id="combo-fields">
+              <label>
+                Combo
+                <select id="combo" required></select>
+              </label>
+            </div>
+
+            <div id="custom-fields" hidden>
+              <fieldset class="chip-fieldset">
+                <legend>Fruits <span class="optional">(pick any)</span></legend>
+                <div class="chip-toggles" id="fruit-chips"></div>
+              </fieldset>
+            </div>
+
             <div class="form-row">
               <label>
                 Size
@@ -190,27 +225,19 @@
                 <input id="qty" type="number" min="1" max="50" value="1" required />
               </label>
             </div>
-            <label>
-              Nut type <span class="optional">(optional · for premium)</span>
-              <select id="nut">
-                <option value="">No preference / N/A</option>
-                <option>Almonds</option>
-                <option>Walnuts</option>
-                <option>Pecans</option>
-                <option>Cashews</option>
-                <option>Mixed nuts</option>
-              </select>
-            </label>
-            <label>
-              Spice <span class="optional">(optional)</span>
-              <select id="spice">
-                <option value="">None</option>
-                <option>Cinnamon</option>
-                <option>Allspice</option>
-                <option>Cardamom</option>
-                <option>Nutmeg</option>
-              </select>
-            </label>
+
+            <fieldset class="chip-fieldset">
+              <legend>Nuts <span class="optional" id="nut-legend-note">(optional)</span></legend>
+              <div class="chip-toggles" id="nut-chips"></div>
+            </fieldset>
+
+            <fieldset class="chip-fieldset">
+              <legend>Spices <span class="optional">(optional)</span></legend>
+              <div class="chip-toggles" id="spice-chips"></div>
+            </fieldset>
+
+            <p id="custom-error" class="form-error" hidden role="alert">Please choose at least one fruit or nut for your mix.</p>
+
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Add to order</button>
               <p class="line-total" aria-live="polite">Line total: <strong id="line-total">R0</strong></p>
@@ -225,6 +252,7 @@
           </ul>
           <div class="cart-footer">
             <p class="running-total">Total: <strong id="cart-total">R0</strong></p>
+            <p id="cart-total-note" class="cart-total-note" hidden>+ custom mix price to be confirmed</p>
             <button type="button" id="wa-order" class="btn btn-wa" disabled>Order on WhatsApp</button>
             <button type="button" id="clear-cart" class="btn btn-ghost" hidden>Clear order</button>
             <p class="wa-hint">Opens WhatsApp to <strong>066 356 2279</strong> with your order ready to send.</p>
